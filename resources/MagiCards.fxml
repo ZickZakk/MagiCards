@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="400.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" text="New" />
+            <MenuItem mnemonicParsing="false" text="Open…" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Save" />
+            <MenuItem mnemonicParsing="false" text="Save As…" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Preferences…" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Quit" />
+          </items>
+        </Menu>
+            <Menu mnemonicParsing="false" text="Deck Side">
+              <items>
+                  <CheckMenuItem mnemonicParsing="false" text="Front Side" />
+                  <CheckMenuItem mnemonicParsing="false" text="Back Side" />
+                  <CheckMenuItem mnemonicParsing="false" text="Left Side" />
+                  <CheckMenuItem mnemonicParsing="false" text="Right Side" />
+              </items>
+            </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About MagiCards" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+      <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+         <children>
+            <SplitPane dividerPositions="0.65" HBox.hgrow="ALWAYS">
+               <items>
+                  <ScrollPane fitToHeight="true" fitToWidth="true">
+                     <content>
+                        <VBox alignment="CENTER" fillWidth="false">
+                           <children>
+                              <StackPane style="-fx-border-color: black; -fx-background-color: lightgrey;">
+                                 <children>
+                                    <ImageView fx:id="deckView" onMouseDragged="#interactWithImage" onMousePressed="#interactWithImage" pickOnBounds="true" preserveRatio="true" smooth="false" StackPane.alignment="CENTER">
+                                       <cursor>
+                                          <Cursor fx:constant="DEFAULT" />
+                                       </cursor>
+                                    </ImageView>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                 </VBox.margin>
+                              </StackPane>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+                  <Accordion fx:id="sideMenu">
+                    <panes>
+                      <TitledPane fx:id="drawMenu" animated="false" text="Draw">
+                           <content>
+                              <VBox>
+                                 <children>
+                                    <FlowPane hgap="10.0">
+                                       <children>
+                                          <Label text="Color:" />
+                                          <ColorPicker fx:id="colorPicker" />
+                                          <ToggleButton fx:id="drawToggleButton" mnemonicParsing="false" text="Draw" />
+                                          <ToggleButton fx:id="eraseToggleButton" mnemonicParsing="false" text="Erase" />
+                                       </children>
+                                    </FlowPane>
+                                    <FlowPane vgap="10.0">
+                                       <children>
+                                          <Label text="Zoom:" />
+                                          <Slider fx:id="zoomSlider" blockIncrement="1.0" majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="0" prefHeight="48.0" prefWidth="228.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="3.0">
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </Slider>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </FlowPane>
+                                 </children>
+                              </VBox>
+                           </content>
+                      </TitledPane>
+                      <TitledPane fx:id="shuffleMenu" animated="false" expanded="false" text="Shuffle History">
+                           <content>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <TableView fx:id="shuffleHistoryTable" VBox.vgrow="ALWAYS">
+                                      <columns>
+                                        <TableColumn fx:id="shuffleHistoryNameColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="5.0" prefWidth="210.0" sortable="false" text="Name" />
+                                          <TableColumn fx:id="shuffleHistoryTypeColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="5.0" prefWidth="210.0" sortable="false" text="Type" />
+                                      </columns>
+                                    </TableView>
+                                    <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="10.0" vgap="10.0">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#addNewShuffleToHistory" text="Add" />
+                                          <Button mnemonicParsing="false" text="Up" />
+                                          <Button mnemonicParsing="false" text="Down" />
+                                          <Button mnemonicParsing="false" text="Remove" />
+                                       </children>
+                                    </FlowPane>
+                                 </children>
+                              </VBox>
+                           </content>
+                      </TitledPane>
+                    </panes>
+                  </Accordion>
+               </items>
+            </SplitPane>
+         </children>
+      </HBox>
+  </children>
+</VBox>
