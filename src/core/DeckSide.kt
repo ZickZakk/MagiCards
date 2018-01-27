@@ -1,6 +1,7 @@
 package core
 
-enum class DeckSide {
+enum class DeckSide
+{
     Front,
     Back,
     Left,

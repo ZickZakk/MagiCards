@@ -16,5 +16,10 @@
       <option name="name" value="e5d72578-3e84-4325-a12d-5d0cdbe67fb4" />
       <option name="url" value="http://central.maven.org/maven2/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="0b84e5d2-7a86-49dc-b35f-aa3a30548022" />
+      <option name="name" value="0b84e5d2-7a86-49dc-b35f-aa3a30548022" />
+      <option name="url" value="https://dl.bintray.com/jerady/maven/" />
+    </remote-repository>
   </component>
 </project>

@@ -1,11 +1,12 @@
 package core.shuffeling
 
-class CombinedShuffle(firstShuffle: Shuffle, secondShuffle: Shuffle) : Shuffle {
-
-    override val Name = "Combined"
+class CombinedShuffle(firstShuffle: Shuffle, secondShuffle: Shuffle) : Shuffle
+{
+    override val Name = firstShuffle.Name + " combined with " + secondShuffle.Name
     override val ShuffleEntries: List<ShuffleEntry>
 
-    init {
+    init
+    {
         ShuffleEntries = mutableListOf()
 
         for (shuffleEntry in firstShuffle.ShuffleEntries)

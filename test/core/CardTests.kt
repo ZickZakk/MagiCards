@@ -4,9 +4,11 @@ import javafx.scene.paint.Color
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class CardTests {
+class CardTests
+{
     @Test
-    fun testDraw() {
+    fun testDraw()
+    {
         val card = Card(5, 10)
 
         val expectedFront = listOf<Color>(Color.BLUE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE)
@@ -17,17 +19,19 @@ class CardTests {
         card.Draw(DeckSide.Front, 0, Color.BLUE)
         assertEquals(expectedFront, card.frontSide)
 
-        card.Draw(DeckSide.Back,1, Color.BLUE)
+        card.Draw(DeckSide.Back, 1, Color.BLUE)
         assertEquals(expectedBack, card.backSide)
 
-        card.Draw(DeckSide.Left,2, Color.BLUE)
+        card.Draw(DeckSide.Left, 2, Color.BLUE)
         assertEquals(expectedLeft, card.leftSide)
 
-        card.Draw(DeckSide.Right,3, Color.BLUE)
+        card.Draw(DeckSide.Right, 3, Color.BLUE)
         assertEquals(expectedRight, card.rightSide)
     }
 
-    @Test fun testTurn() {
+    @Test
+    fun testTurn()
+    {
         val card = Card(5, 10)
 
         val expectedBack = listOf<Color>(Color.BLUE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE)
@@ -35,10 +39,10 @@ class CardTests {
         val expectedRight = listOf<Color>(Color.WHITE, Color.WHITE, Color.BLUE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE)
         val expectedLeft = listOf<Color>(Color.WHITE, Color.WHITE, Color.WHITE, Color.BLUE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE)
 
-        card.Draw(DeckSide.Front,0, Color.BLUE)
-        card.Draw(DeckSide.Back,1, Color.BLUE)
-        card.Draw(DeckSide.Left,2, Color.BLUE)
-        card.Draw(DeckSide.Right,3, Color.BLUE)
+        card.Draw(DeckSide.Front, 0, Color.BLUE)
+        card.Draw(DeckSide.Back, 1, Color.BLUE)
+        card.Draw(DeckSide.Left, 2, Color.BLUE)
+        card.Draw(DeckSide.Right, 3, Color.BLUE)
 
         card.Turn()
 
@@ -48,7 +52,9 @@ class CardTests {
         assertEquals(expectedRight, card.rightSide)
     }
 
-    @Test fun testFlip() {
+    @Test
+    fun testFlip()
+    {
         val card = Card(5, 10)
 
         val expectedFront = listOf<Color>(Color.BLUE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE)
@@ -56,10 +62,10 @@ class CardTests {
         val expectedRight = listOf<Color>(Color.WHITE, Color.WHITE, Color.BLUE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE)
         val expectedLeft = listOf<Color>(Color.WHITE, Color.WHITE, Color.WHITE, Color.BLUE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE)
 
-        card.Draw(DeckSide.Front,0, Color.BLUE)
-        card.Draw(DeckSide.Back,1, Color.BLUE)
-        card.Draw(DeckSide.Left,2, Color.BLUE)
-        card.Draw(DeckSide.Right,3, Color.BLUE)
+        card.Draw(DeckSide.Front, 0, Color.BLUE)
+        card.Draw(DeckSide.Back, 1, Color.BLUE)
+        card.Draw(DeckSide.Left, 2, Color.BLUE)
+        card.Draw(DeckSide.Right, 3, Color.BLUE)
 
         card.Flip()
 

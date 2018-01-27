@@ -1,24 +1,25 @@
 package core
 
-import core.shuffeling.ShuffleEntry
+import core.shuffeling.Shuffle
 
-class Deck(val Size: Int, val FaceWidth: Int, val SideWidth: Int) {
+class Deck(val Size: Int, val FaceWidth: Int, val SideWidth: Int)
+{
 
-    val Cards : List<Card>
+    val Cards: List<Card>
         get() = _cards
 
 
-    private var _cards = MutableList(Size, {Card(FaceWidth, SideWidth)})
+    private var _cards = MutableList(Size, { Card(FaceWidth, SideWidth) })
 
-    fun Shuffle(shuffleEntries: List<ShuffleEntry>)
+    fun Shuffle(shuffle: Shuffle)
     {
         val shuffledCards = mutableListOf<Card>()
 
-        for (shuffleEntry in shuffleEntries.sortedBy { it.DestinationIndex })
+        for (shuffleEntry in shuffle.ShuffleEntries.sortedBy { it.DestinationIndex })
         {
             val card = _cards[shuffleEntry.SourceIndex]
 
-            if(shuffleEntry.Flip)
+            if (shuffleEntry.Flip)
                 card.Flip()
 
             if (shuffleEntry.Turn)
@@ -30,9 +31,10 @@ class Deck(val Size: Int, val FaceWidth: Int, val SideWidth: Int) {
         _cards = shuffledCards
     }
 
-    fun getSideWidth(side: DeckSide) : Int
+    fun getSideWidth(side: DeckSide): Int
     {
-        return when(side) {
+        return when (side)
+        {
             DeckSide.Left, DeckSide.Right -> SideWidth
             DeckSide.Front, DeckSide.Back -> FaceWidth
         }
