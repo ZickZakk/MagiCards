@@ -2,6 +2,6 @@ package core.shuffeling
 
 class NonChangingShuffle(deckSize: Int) : Shuffle
 {
-    override val Name = "None"
-    override val ShuffleEntries = List(deckSize, { index -> ShuffleEntry(index, index, false, false) })
+    override val type = SimpleShuffleType("None")
+    override val shuffleEntries = List(deckSize, { index -> ShuffleEntry(index, index, false, false) })
 }

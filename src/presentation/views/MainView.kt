@@ -14,7 +14,7 @@ import tornadofx.*
 
 class MainView : View()
 {
-    override val root: VBox by fxml("../../MagiCards.fxml")
+    override val root: VBox by fxml()
 
     private val _deckView: ImageView by fxid("deckView")
     private val _drawToggleButton: ToggleButton by fxid("drawToggleButton")
@@ -79,7 +79,7 @@ class MainView : View()
 
     fun addNewShuffleToHistory()
     {
-        _viewModel.addShuffleToHistory("Test")
+        _viewModel.addShuffleToHistory()
         _shuffleHistoryTable.selectionModel.selectLast()
     }
 

@@ -2,23 +2,27 @@ package core.shuffeling
 
 class CombinedShuffle(firstShuffle: Shuffle, secondShuffle: Shuffle) : Shuffle
 {
-    override val Name = firstShuffle.Name + " combined with " + secondShuffle.Name
-    override val ShuffleEntries: List<ShuffleEntry>
+    override val type = SimpleShuffleType(firstShuffle.type.name + " combined with " + secondShuffle.type.name)
+
+    override val shuffleEntries: List<ShuffleEntry>
 
     init
     {
-        ShuffleEntries = mutableListOf()
+        if(firstShuffle.shuffleEntries.size != secondShuffle.shuffleEntries.size)
+            throw IllegalArgumentException("Shuffles to combine are not made for the same deck size!")
 
-        for (shuffleEntry in firstShuffle.ShuffleEntries)
+        shuffleEntries = mutableListOf()
+
+        for (shuffleEntry in firstShuffle.shuffleEntries)
         {
-            val otherShuffleEntry = secondShuffle.ShuffleEntries.find { it.SourceIndex == shuffleEntry.DestinationIndex }!!
+            val otherShuffleEntry = secondShuffle.shuffleEntries.find { it.SourceIndex == shuffleEntry.DestinationIndex }!!
 
             val combinedShuffleEntry = ShuffleEntry(shuffleEntry.SourceIndex,
                     otherShuffleEntry.DestinationIndex,
                     shuffleEntry.Flip.xor(otherShuffleEntry.Flip),
                     shuffleEntry.Turn.xor(otherShuffleEntry.Turn))
 
-            ShuffleEntries.add(combinedShuffleEntry)
+            shuffleEntries.add(combinedShuffleEntry)
         }
     }
 }

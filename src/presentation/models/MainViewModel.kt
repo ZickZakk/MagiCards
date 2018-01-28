@@ -2,9 +2,10 @@ package presentation.models
 
 import core.Deck
 import core.DeckSide
-import core.shuffeling.FaroShuffle
 import core.shuffeling.NonChangingShuffle
 import core.shuffeling.Shuffle
+import core.shuffeling.ShuffleRegister
+import presentation.components.XMLShuffle
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleObjectProperty
@@ -12,11 +13,16 @@ import javafx.collections.FXCollections
 import javafx.scene.control.Alert
 import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.ButtonType
+import javafx.scene.control.ChoiceDialog
 import javafx.scene.control.TextInputDialog
 import javafx.scene.image.Image
 import javafx.scene.paint.Color
+import org.jdom2.input.DOMBuilder
+import org.jonnyzzz.kotlin.xml.bind.jdom.JDOM
 import presentation.components.DeckSideImage
 import tornadofx.*
+import java.io.File
+import javax.xml.parsers.DocumentBuilderFactory
 
 
 class MainViewModel(private val _deck: Deck)
@@ -43,17 +49,19 @@ class MainViewModel(private val _deck: Deck)
         selectedShuffleProperty.onChange { shuffleTo(it!!) }
 
         shuffles.add(ShuffleHistoryEntry("Start", NonChangingShuffle(_deck.Size)))
+
+        reloadShuffles()
     }
 
     private fun shuffleTo(shuffleHistoryEntry: ShuffleHistoryEntry)
     {
-        _deck.Shuffle(_combinedShuffleState.Reverse())
+        _deck.Shuffle(_combinedShuffleState.reverse())
 
         _combinedShuffleState = NonChangingShuffle(_deck.Size)
 
         for (shuffle in shuffles.dropLastWhile { it != shuffleHistoryEntry })
         {
-            _combinedShuffleState = _combinedShuffleState.Combine(shuffle.Shuffle)
+            _combinedShuffleState = _combinedShuffleState.combine(shuffle.Shuffle)
         }
 
         _deck.Shuffle(_combinedShuffleState)
@@ -89,28 +97,40 @@ class MainViewModel(private val _deck: Deck)
         deckSideImageProperty.set(DeckSideImage(_deck, selectedDeckSideProperty.get(), selectedZoomLevelProperty.get()).image)
     }
 
-    fun addShuffleToHistory(name: String)
+    fun addShuffleToHistory()
     {
-        shuffles.add(ShuffleHistoryEntry(name, FaroShuffle(_deck.Size)))
+        val choices = ShuffleRegister.registeredShuffleTypes.map { it.name }
+
+        val dialog = ChoiceDialog(ShuffleRegister.registeredShuffleTypes.first().name, choices)
+        dialog.title = "Choose shuffle to add"
+        dialog.headerText = "Choose shuffle to add"
+        dialog.contentText = "Registered shuffles:"
+
+        val result = dialog.showAndWait()
+
+        result.ifPresent { chosenShuffleName ->
+            val shuffleToAdd = ShuffleRegister.registeredShuffleTypes.first({ it.name == chosenShuffleName }).createShuffleForDeckSize(_deck.Size)
+            shuffles.add(ShuffleHistoryEntry("New shuffle", shuffleToAdd))
+        }
     }
 
     fun renameShuffleHistoryEntry()
     {
-        val oldName = selectedShuffleProperty.get().Name
+        val oldName = selectedShuffleProperty.get().name
 
         val dialog = TextInputDialog(oldName)
         dialog.title = "Rename Shuffle History Entry '$oldName'"
         dialog.headerText = "Rename Shuffle History Entry '$oldName'"
-        dialog.contentText = "New Name:"
+        dialog.contentText = "New name:"
 
         val result = dialog.showAndWait()
 
-        result.ifPresent { selectedShuffleProperty.get().Name = it }
+        result.ifPresent { selectedShuffleProperty.get().name = it }
     }
 
     fun removeShuffleHistoryEntry()
     {
-        val nameToRemove = selectedShuffleProperty.get().Name
+        val nameToRemove = selectedShuffleProperty.get().name
 
         val alert = Alert(AlertType.CONFIRMATION)
 
@@ -134,5 +154,35 @@ class MainViewModel(private val _deck: Deck)
     fun moveDownShuffleHistoryEntry()
     {
         shuffles.moveDown(selectedShuffleProperty.get())
+    }
+
+    fun reloadShuffles()
+    {
+        val jarPath = File(MainViewModel::class.java.protectionDomain.codeSource.location.toURI().path)
+
+        val shufflesDirectory = jarPath.resolve(File("shuffles"))
+
+        for (file in shufflesDirectory.walkTopDown())
+        {
+            if(!file.isFile)
+                continue
+
+            if(!file.canRead())
+                continue
+
+            if(!file.path.endsWith(".shuffle"))
+                continue
+
+            val xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file)
+
+            val document = DOMBuilder().build(xmlDoc)
+
+            val loadedShuffle = JDOM.load(document.rootElement, XMLShuffle::class.java)
+
+            if(!loadedShuffle.isValid())
+                continue
+
+            ShuffleRegister.addShuffleType(loadedShuffle.toShuffleType())
+        }
     }
 }

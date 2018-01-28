@@ -7,9 +7,9 @@ class ShuffleHistoryEntry(name: String, val Shuffle: Shuffle)
 {
     val nameProperty = SimpleStringProperty(name)
 
-    val shuffleTypeProperty = SimpleStringProperty(Shuffle.Name)
+    val shuffleTypeProperty = SimpleStringProperty(Shuffle.type.name)
 
-    var Name: String
+    var name: String
         get()
         {
             return nameProperty.get()

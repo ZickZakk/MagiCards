@@ -2,6 +2,7 @@ package core
 
 import core.shuffeling.CustomShuffle
 import core.shuffeling.ShuffleEntry
+import core.shuffeling.SimpleShuffleType
 import javafx.scene.paint.Color
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -15,7 +16,7 @@ class DeckTests
 
 
         val shuffleEntries = listOf(ShuffleEntry(0, 1, false, true), ShuffleEntry(1, 0, true, false))
-        val shuffle = CustomShuffle("", shuffleEntries)
+        val shuffle = CustomShuffle(SimpleShuffleType(""), shuffleEntries)
 
         deck.Cards[0].Draw(DeckSide.Front, 0, Color.BLUE)
         deck.Cards[1].Draw(DeckSide.Left, 1, Color.BLUE)

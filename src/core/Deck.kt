@@ -15,7 +15,7 @@ class Deck(val Size: Int, val FaceWidth: Int, val SideWidth: Int)
     {
         val shuffledCards = mutableListOf<Card>()
 
-        for (shuffleEntry in shuffle.ShuffleEntries.sortedBy { it.DestinationIndex })
+        for (shuffleEntry in shuffle.shuffleEntries.sortedBy { it.DestinationIndex })
         {
             val card = _cards[shuffleEntry.SourceIndex]
 

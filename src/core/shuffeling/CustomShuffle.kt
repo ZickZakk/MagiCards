@@ -1,5 +1,3 @@
 package core.shuffeling
 
-class CustomShuffle(override val Name: String, override val ShuffleEntries: List<ShuffleEntry>) : Shuffle
-{
-}
+class CustomShuffle(override val type: ShuffleType, override val shuffleEntries: List<ShuffleEntry>) : Shuffle

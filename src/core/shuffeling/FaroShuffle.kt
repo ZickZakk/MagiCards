@@ -1,9 +1,8 @@
 package core.shuffeling
 
-class FaroShuffle(private val deckSize: Int) : Shuffle
+class FaroShuffle(private val deckSize: Int, override val type: ShuffleType) : Shuffle
 {
-    override val Name = "Faro without Flip/Turn"
-    override val ShuffleEntries = List(deckSize, { index -> ShuffleEntry(index, faroShuffleLogic(index), false, false) })
+    override val shuffleEntries = List(deckSize, { index -> ShuffleEntry(index, faroShuffleLogic(index), false, false) })
 
     private fun faroShuffleLogic(source: Int): Int
     {

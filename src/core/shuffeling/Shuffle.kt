@@ -2,15 +2,15 @@ package core.shuffeling
 
 interface Shuffle
 {
-    val Name: String
-    val ShuffleEntries: List<ShuffleEntry>
+    val type: ShuffleType
+    val shuffleEntries: List<ShuffleEntry>
 
-    fun Combine(otherShuffle: Shuffle): Shuffle
+    fun combine(otherShuffle: Shuffle): Shuffle
     {
         return CombinedShuffle(this, otherShuffle)
     }
 
-    fun Reverse(): Shuffle
+    fun reverse(): Shuffle
     {
         return ReversedShuffle(this)
     }

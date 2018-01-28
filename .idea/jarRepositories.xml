@@ -21,5 +21,10 @@
       <option name="name" value="0b84e5d2-7a86-49dc-b35f-aa3a30548022" />
       <option name="url" value="https://dl.bintray.com/jerady/maven/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="6fc77a03-49fb-494f-8129-d7b55465f472" />
+      <option name="name" value="6fc77a03-49fb-494f-8129-d7b55465f472" />
+      <option name="url" value="http://dl.bintray.com/jonnyzzz/maven" />
+    </remote-repository>
   </component>
 </project>
