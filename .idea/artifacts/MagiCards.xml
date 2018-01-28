@@ -20,6 +20,7 @@
         <element id="library" level="project" name="de.jensd:fontawesomefx:8.1" />
         <element id="library" level="project" name="KotlinJavaRuntime" />
         <element id="library" level="project" name="no.tornado:tornadofx:1.7.14" />
+        <element id="library" level="project" name="org.jonnyzzz.kotlin.xml.bind:jdom:0.2.0" />
       </element>
       <element id="directory" name="shuffles">
         <element id="dir-copy" path="$PROJECT_DIR$/resources/shuffles" />

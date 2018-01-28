@@ -1,16 +1,28 @@
 package presentation.views
 
+import core.DeckSide
 import javafx.beans.binding.Bindings
 import javafx.beans.property.StringProperty
+import javafx.collections.FXCollections
 import javafx.scene.Cursor
 import javafx.scene.control.*
 import javafx.scene.image.ImageView
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.VBox
 import javafx.stage.FileChooser
+import presentation.components.DeckSideImage
 import presentation.models.MainViewModel
 import presentation.models.ShuffleHistoryEntry
 import tornadofx.*
+import javafx.scene.control.Alert.AlertType
+import javafx.scene.control.Alert
+import java.util.Collections.addAll
+import javafx.scene.control.Hyperlink
+import javafx.scene.layout.FlowPane
+
+
+
+
 
 
 class MainView : View()
@@ -34,6 +46,8 @@ class MainView : View()
     private val _removeShuffleButton: Button by fxid("removeShuffleButton")
 
     private val _saveMenuButton: MenuItem by fxid("saveMenuButton")
+
+    private val _sideChooser: ChoiceBox<DeckSide> by fxid("sideChooser")
 
     private val _drawToggleGroup = ToggleGroup()
 
@@ -77,6 +91,10 @@ class MainView : View()
         _saveMenuButton.disableProperty().bind(_viewModel.currentFilePath.isEmpty)
 
         titleProperty.bind(Bindings.concat("MagiCards - ", _viewModel.currentFilePath))
+
+        _sideChooser.items.setAll(DeckSide.values().toList())
+
+        _sideChooser.valueProperty().bindBidirectional(_viewModel.selectedDeckSideProperty)
     }
 
     fun interactWithImage(event: MouseEvent)
@@ -161,5 +179,23 @@ class MainView : View()
     fun quit()
     {
         primaryStage.close()
+    }
+
+    fun showInfo()
+    {
+        val alert = Alert(AlertType.INFORMATION)
+        alert.title = "MagiCards Information"
+        alert.headerText = "MagiCards Information"
+
+        val box = VBox()
+        val line1 = Label("This tool was developed by Georg Jenschmischek.")
+        val line2 = Label("It is licenced for free under GPL v3.")
+        val line3 = Label("Visit https://github.com/ZickZakk/MagiCards for source code.")
+
+        box.children.addAll(line1, line2, line3)
+
+        alert.dialogPane.contentProperty().set(box)
+
+        alert.showAndWait()
     }
 }

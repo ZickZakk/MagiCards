@@ -162,7 +162,10 @@ class MainViewModel
 
     fun reloadShuffles()
     {
-        val jarPath = File(MainViewModel::class.java.protectionDomain.codeSource.location.toURI().path)
+        var jarPath = File(MainViewModel::class.java.protectionDomain.codeSource.location.toURI().path)
+
+        if(jarPath.isFile)
+            jarPath = File(jarPath.parent)
 
         val shufflesDirectory = jarPath.resolve(File("shuffles"))
 
