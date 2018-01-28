@@ -1,4 +1,4 @@
-package presentation.components
+package presentation.models
 
 import org.jonnyzzz.kotlin.xml.bind.XAttribute
 import org.jonnyzzz.kotlin.xml.bind.jdom.JXML

@@ -1,6 +1,8 @@
 package core.shuffeling
 
-interface ShuffleType
+import java.io.Serializable
+
+interface ShuffleType : Serializable
 {
     val name: String
 

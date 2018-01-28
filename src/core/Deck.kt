@@ -1,15 +1,15 @@
 package core
 
 import core.shuffeling.Shuffle
+import java.io.*
 
-class Deck(val Size: Int, val FaceWidth: Int, val SideWidth: Int)
+class Deck(val size: Int, private val faceWidth: Int, private val sideWidth: Int) : Serializable
 {
-
     val Cards: List<Card>
         get() = _cards
 
 
-    private var _cards = MutableList(Size, { Card(FaceWidth, SideWidth) })
+    private var _cards = MutableList(size, { Card(faceWidth, sideWidth) })
 
     fun Shuffle(shuffle: Shuffle)
     {
@@ -35,8 +35,8 @@ class Deck(val Size: Int, val FaceWidth: Int, val SideWidth: Int)
     {
         return when (side)
         {
-            DeckSide.Left, DeckSide.Right -> SideWidth
-            DeckSide.Front, DeckSide.Back -> FaceWidth
+            DeckSide.Left, DeckSide.Right -> sideWidth
+            DeckSide.Front, DeckSide.Back -> faceWidth
         }
     }
 }

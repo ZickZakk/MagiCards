@@ -5,10 +5,10 @@ import core.DeckSide
 import core.shuffeling.NonChangingShuffle
 import core.shuffeling.Shuffle
 import core.shuffeling.ShuffleRegister
-import presentation.components.XMLShuffle
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleObjectProperty
+import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.scene.control.Alert
 import javafx.scene.control.Alert.AlertType
@@ -21,11 +21,11 @@ import org.jdom2.input.DOMBuilder
 import org.jonnyzzz.kotlin.xml.bind.jdom.JDOM
 import presentation.components.DeckSideImage
 import tornadofx.*
-import java.io.File
+import java.io.*
 import javax.xml.parsers.DocumentBuilderFactory
 
 
-class MainViewModel(private val _deck: Deck)
+class MainViewModel
 {
     // Outputs
     val deckSideImageProperty = SimpleObjectProperty<Image>()
@@ -37,18 +37,22 @@ class MainViewModel(private val _deck: Deck)
     val selectedZoomLevelProperty = SimpleIntegerProperty(3)
     val selectedDeckSideProperty = SimpleObjectProperty<DeckSide>(DeckSide.Left)
     val selectedShuffleProperty = SimpleObjectProperty<ShuffleHistoryEntry>()
+    val currentFilePath = SimpleStringProperty("")
+
+    private var _deck = Deck(52, 60, 260)
 
     val shuffles = FXCollections.observableArrayList<ShuffleHistoryEntry>()!!
 
-    private var _combinedShuffleState: Shuffle = NonChangingShuffle(_deck.Size)
+    private var _combinedShuffleState: Shuffle = NonChangingShuffle(_deck.size)
 
     init
     {
         selectedDeckSideProperty.onChange { redraw() }
         selectedZoomLevelProperty.onChange { redraw() }
         selectedShuffleProperty.onChange { shuffleTo(it!!) }
+        shuffles.onChange { redraw() }
 
-        shuffles.add(ShuffleHistoryEntry("Start", NonChangingShuffle(_deck.Size)))
+        shuffles.add(ShuffleHistoryEntry("Start", NonChangingShuffle(_deck.size)))
 
         reloadShuffles()
     }
@@ -57,7 +61,7 @@ class MainViewModel(private val _deck: Deck)
     {
         _deck.Shuffle(_combinedShuffleState.reverse())
 
-        _combinedShuffleState = NonChangingShuffle(_deck.Size)
+        _combinedShuffleState = NonChangingShuffle(_deck.size)
 
         for (shuffle in shuffles.dropLastWhile { it != shuffleHistoryEntry })
         {
@@ -80,14 +84,14 @@ class MainViewModel(private val _deck: Deck)
         if (realX >= _deck.getSideWidth(selectedDeckSideProperty.get()) || realX < 0)
             return
 
-        if (cardIndex >= _deck.Size || cardIndex < 0)
+        if (cardIndex >= _deck.size || cardIndex < 0)
             return
 
         if (drawModeEnabledProperty.get())
-            _deck.Cards[cardIndex].Draw(selectedDeckSideProperty.get(), realX, selectedDrawingColorProperty.get())
+            _deck.Cards[cardIndex].Draw(selectedDeckSideProperty.get(), realX, core.Color(selectedDrawingColorProperty.get()))
 
         if (eraseModeEnabledProperty.get())
-            _deck.Cards[cardIndex].Draw(selectedDeckSideProperty.get(), realX, Color.WHITE)
+            _deck.Cards[cardIndex].Draw(selectedDeckSideProperty.get(), realX, core.Color())
 
         redraw()
     }
@@ -109,14 +113,14 @@ class MainViewModel(private val _deck: Deck)
         val result = dialog.showAndWait()
 
         result.ifPresent { chosenShuffleName ->
-            val shuffleToAdd = ShuffleRegister.registeredShuffleTypes.first({ it.name == chosenShuffleName }).createShuffleForDeckSize(_deck.Size)
+            val shuffleToAdd = ShuffleRegister.registeredShuffleTypes.first({ it.name == chosenShuffleName }).createShuffleForDeckSize(_deck.size)
             shuffles.add(ShuffleHistoryEntry("New shuffle", shuffleToAdd))
         }
     }
 
     fun renameShuffleHistoryEntry()
     {
-        val oldName = selectedShuffleProperty.get().name
+        val oldName = selectedShuffleProperty.get().nameProperty.get()
 
         val dialog = TextInputDialog(oldName)
         dialog.title = "Rename Shuffle History Entry '$oldName'"
@@ -125,12 +129,12 @@ class MainViewModel(private val _deck: Deck)
 
         val result = dialog.showAndWait()
 
-        result.ifPresent { selectedShuffleProperty.get().name = it }
+        result.ifPresent { selectedShuffleProperty.get().nameProperty.set(it) }
     }
 
     fun removeShuffleHistoryEntry()
     {
-        val nameToRemove = selectedShuffleProperty.get().name
+        val nameToRemove = selectedShuffleProperty.get().nameProperty.get()
 
         val alert = Alert(AlertType.CONFIRMATION)
 
@@ -164,13 +168,13 @@ class MainViewModel(private val _deck: Deck)
 
         for (file in shufflesDirectory.walkTopDown())
         {
-            if(!file.isFile)
+            if (!file.isFile)
                 continue
 
-            if(!file.canRead())
+            if (!file.canRead())
                 continue
 
-            if(!file.path.endsWith(".shuffle"))
+            if (!file.path.endsWith(".shuffle"))
                 continue
 
             val xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file)
@@ -179,10 +183,60 @@ class MainViewModel(private val _deck: Deck)
 
             val loadedShuffle = JDOM.load(document.rootElement, XMLShuffle::class.java)
 
-            if(!loadedShuffle.isValid())
+            if (!loadedShuffle.isValid())
                 continue
 
             ShuffleRegister.addShuffleType(loadedShuffle.toShuffleType())
         }
+    }
+
+    fun save()
+    {
+        saveAs(File(currentFilePath.get()))
+    }
+
+    fun saveAs(file: File)
+    {
+        _deck.Shuffle(_combinedShuffleState.reverse())
+
+        val currentState = WorkBundle(_deck, shuffles.drop(1).toList())
+
+        ObjectOutputStream(FileOutputStream(file)).use { it -> it.writeObject(currentState) }
+
+        _deck.Shuffle(_combinedShuffleState)
+
+        currentFilePath.set(file.absolutePath)
+    }
+
+    fun open(file: File)
+    {
+        _deck.Shuffle(_combinedShuffleState.reverse())
+        _combinedShuffleState = NonChangingShuffle(_deck.size)
+
+        var workBundle: WorkBundle
+
+        ObjectInputStream(FileInputStream(file)).use { it ->
+            workBundle = it.readObject() as WorkBundle
+            _deck = workBundle.deck
+            shuffles.remove(1, shuffles.size)
+            shuffles.addAll(workBundle.shuffles.map { it.recreate() })
+        }
+
+        redraw()
+
+        currentFilePath.set(file.absolutePath)
+    }
+
+    fun newDeck(deckSize: Int, faceWidth: Int, sideWidth: Int)
+    {
+        _deck.Shuffle(_combinedShuffleState.reverse())
+        _combinedShuffleState = NonChangingShuffle(_deck.size)
+
+        _deck = Deck(deckSize, faceWidth, sideWidth)
+        shuffles.remove(1, shuffles.size)
+
+        redraw()
+
+        currentFilePath.set("")
     }
 }

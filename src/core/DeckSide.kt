@@ -1,6 +1,8 @@
 package core
 
-enum class DeckSide
+import java.io.Serializable
+
+enum class DeckSide : Serializable
 {
     Front,
     Back,

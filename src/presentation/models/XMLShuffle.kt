@@ -1,4 +1,4 @@
-package presentation.components
+package presentation.models
 
 import core.shuffeling.CustomShuffleType
 import core.shuffeling.ShuffleEntry

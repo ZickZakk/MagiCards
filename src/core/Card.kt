@@ -1,15 +1,15 @@
 package core
 
-import javafx.scene.paint.Color
+import java.io.Serializable
 
-class Card(FaceWidth: Int, SideWidth: Int)
+class Card(FaceWidth: Int, SideWidth: Int) : Serializable
 {
 
     private val _sides =
-            mutableMapOf(DeckSide.Front to MutableList<Color>(FaceWidth, { Color.WHITE }),
-                    DeckSide.Back to MutableList<Color>(FaceWidth, { Color.WHITE }),
-                    DeckSide.Left to MutableList<Color>(SideWidth, { Color.WHITE }),
-                    DeckSide.Right to MutableList<Color>(SideWidth, { Color.WHITE }))
+            mutableMapOf(DeckSide.Front to MutableList(FaceWidth, { Color() }),
+                    DeckSide.Back to MutableList(FaceWidth, { Color() }),
+                    DeckSide.Left to MutableList(SideWidth, { Color() }),
+                    DeckSide.Right to MutableList(SideWidth, { Color() }))
 
     val frontSide: List<Color>
         get() = _sides[DeckSide.Front]!!

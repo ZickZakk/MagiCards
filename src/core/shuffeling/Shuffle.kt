@@ -1,6 +1,8 @@
 package core.shuffeling
 
-interface Shuffle
+import java.io.Serializable
+
+interface Shuffle : Serializable
 {
     val type: ShuffleType
     val shuffleEntries: List<ShuffleEntry>

@@ -1,6 +1,6 @@
 package xmlTest
 
-import presentation.components.XMLShuffle
+import presentation.models.XMLShuffle
 import org.jonnyzzz.kotlin.xml.bind.jdom.JDOM
 import org.junit.Test
 import java.io.File

@@ -1,12 +1,13 @@
 package presentation.views
 
-import core.Deck
 import javafx.beans.binding.Bindings
+import javafx.beans.property.StringProperty
 import javafx.scene.Cursor
 import javafx.scene.control.*
 import javafx.scene.image.ImageView
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.VBox
+import javafx.stage.FileChooser
 import presentation.models.MainViewModel
 import presentation.models.ShuffleHistoryEntry
 import tornadofx.*
@@ -32,9 +33,11 @@ class MainView : View()
     private val _downShuffleButton: Button by fxid("downShuffleButton")
     private val _removeShuffleButton: Button by fxid("removeShuffleButton")
 
+    private val _saveMenuButton: MenuItem by fxid("saveMenuButton")
+
     private val _drawToggleGroup = ToggleGroup()
 
-    private val _viewModel = MainViewModel(Deck(52, 60, 260))
+    private val _viewModel = MainViewModel()
 
     init
     {
@@ -70,6 +73,10 @@ class MainView : View()
                 _zoomSlider.adjustValue(_zoomSlider.value + (event.deltaY / event.multiplierY))
             }
         }
+
+        _saveMenuButton.disableProperty().bind(_viewModel.currentFilePath.isEmpty)
+
+        titleProperty.bind(Bindings.concat("MagiCards - ", _viewModel.currentFilePath))
     }
 
     fun interactWithImage(event: MouseEvent)
@@ -101,5 +108,58 @@ class MainView : View()
     fun moveDownShuffleHistoryEntry()
     {
         _viewModel.moveDownShuffleHistoryEntry()
+    }
+
+    fun saveAs()
+    {
+        val fileChooser = FileChooser()
+
+        //Set extension filter
+        val extFilter = FileChooser.ExtensionFilter("Deck save files (*.deck)", "*.deck")
+        fileChooser.extensionFilters.add(extFilter)
+
+        val allFilter = FileChooser.ExtensionFilter("All files (*)", "*")
+        fileChooser.extensionFilters.add(allFilter)
+
+        fileChooser.initialFileName = "*.deck"
+
+        //Show save file dialog
+        val file = fileChooser.showSaveDialog(currentStage) ?: return
+
+        _viewModel.saveAs(file)
+    }
+
+    fun save()
+    {
+        _viewModel.save()
+    }
+
+    fun newDeck()
+    {
+        _viewModel.newDeck(52, 60, 260)
+    }
+
+    fun open()
+    {
+        val fileChooser = FileChooser()
+
+        //Set extension filter
+        val extFilter = FileChooser.ExtensionFilter("Deck save files (*.deck)", "*.deck")
+        fileChooser.extensionFilters.add(extFilter)
+
+        val allFilter = FileChooser.ExtensionFilter("All files (*)", "*")
+        fileChooser.extensionFilters.add(allFilter)
+
+        //Show save file dialog
+        val file = fileChooser.showOpenDialog(currentStage) ?: return
+
+        _viewModel.open(file)
+
+        _shuffleHistoryTable.selectionModel.selectFirst()
+    }
+
+    fun quit()
+    {
+        primaryStage.close()
     }
 }

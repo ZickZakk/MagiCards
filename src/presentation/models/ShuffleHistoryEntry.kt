@@ -2,20 +2,22 @@ package presentation.models
 
 import core.shuffeling.Shuffle
 import javafx.beans.property.SimpleStringProperty
+import tornadofx.*
+import java.io.Serializable
 
-class ShuffleHistoryEntry(name: String, val Shuffle: Shuffle)
+class ShuffleHistoryEntry(var name: String, val Shuffle: Shuffle) : Serializable
 {
-    val nameProperty = SimpleStringProperty(name)
+    @Transient var nameProperty = SimpleStringProperty(name)
 
-    val shuffleTypeProperty = SimpleStringProperty(Shuffle.type.name)
+    @Transient var shuffleTypeProperty = SimpleStringProperty(Shuffle.type.name)
 
-    var name: String
-        get()
-        {
-            return nameProperty.get()
-        }
-        set(value)
-        {
-            nameProperty.set(value)
-        }
+    init
+    {
+        nameProperty.onChange { name = nameProperty.get() }
+    }
+
+    fun recreate() : ShuffleHistoryEntry
+    {
+        return ShuffleHistoryEntry(name, Shuffle)
+    }
 }
