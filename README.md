@@ -18,7 +18,7 @@ Magicians can use this tool to extend and refine the so called '[Unshuffled](htt
 - [ ] Define decks with an arbitrary amount of custom sized cards (currently only a 52 card standard deck is supported)
 
 # Installation
-Just download the latest [release](https://github.com/ZickZakk/MagiCards/releases/latest) and run the MagiCards.jar file.  
+Just download the [latest release](https://github.com/ZickZakk/MagiCards/releases/latest) and run the MagiCards.jar file.  
 Java 9 with JavaFX is required to run this program. Recommended: Download and use [Java from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/jre9-downloads-3848532.html).
 
 # Define custom shuffles
