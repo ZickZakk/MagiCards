@@ -160,7 +160,7 @@ class MainViewModel
         shuffles.moveDown(selectedShuffleProperty.get())
     }
 
-    fun reloadShuffles()
+    private fun reloadShuffles()
     {
         var jarPath = File(MainViewModel::class.java.protectionDomain.codeSource.location.toURI().path)
 

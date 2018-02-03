@@ -12,7 +12,7 @@ class XMLShuffle
 {
     var name by JXML / XAttribute("name")
     var deckSize by JXML / XAttribute("deckSize")
-    var entries by JXML / "ShuffleEntries" / XAnyElements / XSub(XMLShuffleEntry::class.java)
+    var entries by JXML / "XMLShuffleEntries" / XAnyElements / XSub(XMLShuffleEntry::class.java)
 
     fun isValid() : Boolean
     {
