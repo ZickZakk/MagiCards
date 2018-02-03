@@ -1,11 +1,11 @@
 # MagiCards
 Card deck simulator for magicians. :black_joker: :sparkles: :tada:  
-This tool simulates a card deck with an arbitrary amount of custom sized cards. It enables you to draw on any side of the card deck and shuffle the cards in a specified way.  
+This tool simulates a card deck with an arbitrary amount of custom sized cards. It enables you to paint on any side of the card deck and shuffle the cards in a specified way.  
 Magicians can use this tool to extend and refine the so called '[Unshuffled](http://geniimagazine.com/magicpedia/Unshuffled)' trick, which was popularized by [Paul Gertner](http://gertner.com/).
 
 # Features
 ## Implemented
-- [x] Draw on each of the four sides of a card deck
+- [x] Paint on each of the four sides of a card deck
 - [x] Shuffle the deck and its painting
 - [x] List all shuffles that were applied to the deck in the shuffle history
 - [x] Switch between different shuffles in the shuffle history
