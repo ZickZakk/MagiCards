@@ -67,4 +67,4 @@ Found a bug? You have two options
 
 # Support
 MagiCards is open source and the usage is free of charge. If you use my tool, liked it or even created your own magic trick with it I'm very happy.  
-If you really want to support or thank my in a tangible way, you can [donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZM2L9MRB9VTSJ) for my next pizza. :pizza:
+If you really want to support or thank me in a tangible way, you can [donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZM2L9MRB9VTSJ) for my next pizza. :pizza:
