@@ -39,12 +39,20 @@ A 'example.shuffle' file is provided in the 'shuffles' folder of each release. I
 </XMLShuffle>
 ```
 ## How to define a custom shuffle
-To define your custom shuffle:
-1. Open the provided example.shuffle with any text editor
+To define your custom shuffle copy the following empty shuffle template to any text editor of your likings 
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<XMLShuffle name="" deckSize="">
+    <XMLShuffleEntries>
+        
+    </XMLShuffleEntries>
+</XMLShuffle>
+```  
+Afterwards:
 1. Enter a unique shuffle name as the 'name' attribute of the XMLShuffle tag
 1. Enter the size of the deck your shuffle works for as the 'deckSize' attribute of the XMLShuffle tag
 1. For each card of your deck (defined by the deck size you specified):
-   1. Create a self enclosed 'XMLShuffleEntry' tag
+   1. Create a self enclosed 'XMLShuffleEntry' tag in between the 'XMLShuffleEntries' tags 
    1. Enter the start index of the card as the 'source' attribute of the XMLShuffleEntry tag. Card indexes are zero based.
    1. Enter the destination index of the card as the 'destination' attribute of the XMLShuffleEntry tag. Card indexes are zero based.
    1. Define if the card is flipped during the shuffle by entering 'true' or 'false' as the 'flip' attribute of the XMLShuffleEntry tag.
