@@ -30,12 +30,12 @@ A 'example.shuffle' file is provided in the 'shuffles' folder of each release. I
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <XMLShuffle name="TestShuffle" deckSize="4">
-    <ShuffleEntries>
+    <XMLShuffleEntries>
         <XMLShuffleEntry source="0" destination="3" flip="false" turn="false"/>
         <XMLShuffleEntry source="1" destination="2" flip="true" turn="false"/>
         <XMLShuffleEntry source="2" destination="1" flip="false" turn="true"/>
         <XMLShuffleEntry source="3" destination="0" flip="true" turn="true"/>
-    </ShuffleEntries>
+    </XMLShuffleEntries>
 </XMLShuffle>
 ```
 ## How to define a custom shuffle
