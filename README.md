@@ -40,6 +40,7 @@ A 'example.shuffle' file is provided in the 'shuffles' folder of each release. I
 ```
 ## How to define a custom shuffle
 To define your custom shuffle:
+1. Open the provided example.shuffle with any text editor
 1. Enter a unique shuffle name as the 'name' attribute of the XMLShuffle tag
 1. Enter the size of the deck your shuffle works for as the 'deckSize' attribute of the XMLShuffle tag
 1. For each card of your deck (defined by the deck size you specified):
@@ -48,7 +49,7 @@ To define your custom shuffle:
    1. Enter the destination index of the card as the 'destination' attribute of the XMLShuffleEntry tag. Card indexes are zero based.
    1. Define if the card is flipped during the shuffle by entering 'true' or 'false' as the 'flip' attribute of the XMLShuffleEntry tag.
    1. Define if the card is turned during the shuffle by entering 'true' or 'false' as the 'turn' attribute of the XMLShuffleEntry tag.
-1. Save the file as [name].shuffle in the shuffles folder beneath the MagiCards application
+1. Save the file as with the '.shuffle' extension in the shuffles folder beneath the MagiCards application
    
 ## Common mistakes when creating a custom shuffle
 Your shuffle is not listed when you want to add a new shuffle to the shuffle history or doesn't work as expected?  
