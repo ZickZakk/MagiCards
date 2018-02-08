@@ -1,11 +1,11 @@
 # MagiCards
 Card deck simulator for magicians. :black_joker: :sparkles: :tada:  
-This tool simulates a card deck with an arbitrary amount of custom sized cards. It enables you to draw on any side of the card deck and shuffle the cards in a specified way.  
+This tool simulates a card deck with an arbitrary amount of custom sized cards. It enables you to paint on any side of the card deck and shuffle the cards in a specified way.  
 Magicians can use this tool to extend and refine the so called '[Unshuffled](http://geniimagazine.com/magicpedia/Unshuffled)' trick, which was popularized by [Paul Gertner](http://gertner.com/).
 
 # Features
 ## Implemented
-- [x] Draw on each of the four sides of a card deck
+- [x] Paint on each of the four sides of a card deck
 - [x] Shuffle the deck and its painting
 - [x] List all shuffles that were applied to the deck in the shuffle history
 - [x] Switch between different shuffles in the shuffle history
@@ -18,7 +18,7 @@ Magicians can use this tool to extend and refine the so called '[Unshuffled](htt
 - [ ] Define decks with an arbitrary amount of custom sized cards (currently only a 52 card standard deck is supported)
 
 # Installation
-Just download the latest [release](https://github.com/ZickZakk/MagiCards/releases) and run the MagiCards.jar file.  
+Just download the [latest release](https://github.com/ZickZakk/MagiCards/releases/latest) and run the MagiCards.jar file.  
 Java 9 with JavaFX is required to run this program. Recommended: Download and use [Java from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/jre9-downloads-3848532.html).
 
 # Define custom shuffles
@@ -30,25 +30,34 @@ A 'example.shuffle' file is provided in the 'shuffles' folder of each release. I
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <XMLShuffle name="TestShuffle" deckSize="4">
-    <ShuffleEntries>
+    <XMLShuffleEntries>
         <XMLShuffleEntry source="0" destination="3" flip="false" turn="false"/>
         <XMLShuffleEntry source="1" destination="2" flip="true" turn="false"/>
         <XMLShuffleEntry source="2" destination="1" flip="false" turn="true"/>
         <XMLShuffleEntry source="3" destination="0" flip="true" turn="true"/>
-    </ShuffleEntries>
+    </XMLShuffleEntries>
 </XMLShuffle>
 ```
 ## How to define a custom shuffle
-To define your custom shuffle:
+To define your custom shuffle copy the following empty shuffle template to any text editor of your likings 
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<XMLShuffle name="" deckSize="">
+    <XMLShuffleEntries>
+        
+    </XMLShuffleEntries>
+</XMLShuffle>
+```  
+Afterwards:
 1. Enter a unique shuffle name as the 'name' attribute of the XMLShuffle tag
 1. Enter the size of the deck your shuffle works for as the 'deckSize' attribute of the XMLShuffle tag
 1. For each card of your deck (defined by the deck size you specified):
-   1. Create a self enclosed 'XMLShuffleEntry' tag
+   1. Create a self enclosed 'XMLShuffleEntry' tag in between the 'XMLShuffleEntries' tags 
    1. Enter the start index of the card as the 'source' attribute of the XMLShuffleEntry tag. Card indexes are zero based.
    1. Enter the destination index of the card as the 'destination' attribute of the XMLShuffleEntry tag. Card indexes are zero based.
    1. Define if the card is flipped during the shuffle by entering 'true' or 'false' as the 'flip' attribute of the XMLShuffleEntry tag.
    1. Define if the card is turned during the shuffle by entering 'true' or 'false' as the 'turn' attribute of the XMLShuffleEntry tag.
-1. Save the file as [name].shuffle in the shuffles folder beneath the MagiCards application
+1. Save the file as with the '.shuffle' extension in the shuffles folder beneath the MagiCards application
    
 ## Common mistakes when creating a custom shuffle
 Your shuffle is not listed when you want to add a new shuffle to the shuffle history or doesn't work as expected?  
@@ -67,4 +76,4 @@ Found a bug? You have two options
 
 # Support
 MagiCards is open source and the usage is free of charge. If you use my tool, liked it or even created your own magic trick with it I'm very happy.  
-If you really want to support or thank my in a tangible way, you can [donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZM2L9MRB9VTSJ) for my next pizza. :pizza:
+If you really want to support or thank me in a tangible way, you can [donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZM2L9MRB9VTSJ) for my next pizza. :pizza:
