@@ -32,6 +32,11 @@ class Card(FaceWidth: Int, SideWidth: Int) : Serializable
     fun Flip()
     {
         _sides[DeckSide.Left] = _sides[DeckSide.Right]!!.also { _sides[DeckSide.Right] = _sides[DeckSide.Left]!! }
+
+        _sides[DeckSide.Front]!!.reverse()
+        _sides[DeckSide.Back]!!.reverse()
+        _sides[DeckSide.Left]!!.reverse()
+        _sides[DeckSide.Right]!!.reverse()
     }
 
     fun Draw(side: DeckSide, pixel: Int, color: Color)

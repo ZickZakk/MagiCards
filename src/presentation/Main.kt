@@ -9,6 +9,6 @@ class Main : App(MainView::class)
 {
     init
     {
-        ShuffleRegister.addShuffleType(FaroShuffleType())
+//        ShuffleRegister.addShuffleType(FaroShuffleType())
     }
 }

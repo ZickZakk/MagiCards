@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<XMLShuffle name="Example Reverse Shuffle" deckSize="52">
-    <XMLXMLShuffleEntries>
+<!-- Created by Tom Merten -->
+<XMLShuffle name="Invert_Full_Deck" deckSize="52">
+    <XMLShuffleEntries>
         <XMLShuffleEntry source="0" destination="51" flip="false" turn="false"/>
         <XMLShuffleEntry source="1" destination="50" flip="false" turn="false"/>
         <XMLShuffleEntry source="2" destination="49" flip="false" turn="false"/>
@@ -53,5 +54,5 @@
         <XMLShuffleEntry source="49" destination="2" flip="false" turn="false"/>
         <XMLShuffleEntry source="50" destination="1" flip="false" turn="false"/>
         <XMLShuffleEntry source="51" destination="0" flip="false" turn="false"/>
-    </XMLXMLShuffleEntries>
+    </XMLShuffleEntries>
 </XMLShuffle>

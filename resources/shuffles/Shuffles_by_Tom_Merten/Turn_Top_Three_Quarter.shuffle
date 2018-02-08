@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Created by Tom Merten -->
+<XMLShuffle name="Turn_Top_Three_Quarter" deckSize="52">
+    <XMLShuffleEntries>
+        <XMLShuffleEntry source="0" destination="0" flip="false" turn="true"/>
+        <XMLShuffleEntry source="1" destination="1" flip="false" turn="true"/>
+        <XMLShuffleEntry source="2" destination="2" flip="false" turn="true"/>
+        <XMLShuffleEntry source="3" destination="3" flip="false" turn="true"/>
+        <XMLShuffleEntry source="4" destination="4" flip="false" turn="true"/>
+        <XMLShuffleEntry source="5" destination="5" flip="false" turn="true"/>
+        <XMLShuffleEntry source="6" destination="6" flip="false" turn="true"/>
+        <XMLShuffleEntry source="7" destination="7" flip="false" turn="true"/>
+        <XMLShuffleEntry source="8" destination="8" flip="false" turn="true"/>
+        <XMLShuffleEntry source="9" destination="9" flip="false" turn="true"/>
+        <XMLShuffleEntry source="10" destination="10" flip="false" turn="true"/>
+        <XMLShuffleEntry source="11" destination="11" flip="false" turn="true"/>
+        <XMLShuffleEntry source="12" destination="12" flip="false" turn="true"/>
+        <XMLShuffleEntry source="13" destination="13" flip="false" turn="true"/>
+        <XMLShuffleEntry source="14" destination="14" flip="false" turn="true"/>
+        <XMLShuffleEntry source="15" destination="15" flip="false" turn="true"/>
+        <XMLShuffleEntry source="16" destination="16" flip="false" turn="true"/>
+        <XMLShuffleEntry source="17" destination="17" flip="false" turn="true"/>
+        <XMLShuffleEntry source="18" destination="18" flip="false" turn="true"/>
+        <XMLShuffleEntry source="19" destination="19" flip="false" turn="true"/>
+        <XMLShuffleEntry source="20" destination="20" flip="false" turn="true"/>
+        <XMLShuffleEntry source="21" destination="21" flip="false" turn="true"/>
+        <XMLShuffleEntry source="22" destination="22" flip="false" turn="true"/>
+        <XMLShuffleEntry source="23" destination="23" flip="false" turn="true"/>
+        <XMLShuffleEntry source="24" destination="24" flip="false" turn="true"/>
+        <XMLShuffleEntry source="25" destination="25" flip="false" turn="true"/>
+        <XMLShuffleEntry source="26" destination="26" flip="false" turn="true"/>
+        <XMLShuffleEntry source="27" destination="27" flip="false" turn="true"/>
+        <XMLShuffleEntry source="28" destination="28" flip="false" turn="true"/>
+        <XMLShuffleEntry source="29" destination="29" flip="false" turn="true"/>
+        <XMLShuffleEntry source="30" destination="30" flip="false" turn="true"/>
+        <XMLShuffleEntry source="31" destination="31" flip="false" turn="true"/>
+        <XMLShuffleEntry source="32" destination="32" flip="false" turn="true"/>
+        <XMLShuffleEntry source="33" destination="33" flip="false" turn="true"/>
+        <XMLShuffleEntry source="34" destination="34" flip="false" turn="true"/>
+        <XMLShuffleEntry source="35" destination="35" flip="false" turn="true"/>
+        <XMLShuffleEntry source="36" destination="36" flip="false" turn="true"/>
+        <XMLShuffleEntry source="37" destination="37" flip="false" turn="true"/>
+        <XMLShuffleEntry source="38" destination="38" flip="false" turn="true"/>
+        <XMLShuffleEntry source="39" destination="39" flip="false" turn="false"/>
+        <XMLShuffleEntry source="40" destination="40" flip="false" turn="false"/>
+        <XMLShuffleEntry source="41" destination="41" flip="false" turn="false"/>
+        <XMLShuffleEntry source="42" destination="42" flip="false" turn="false"/>
+        <XMLShuffleEntry source="43" destination="43" flip="false" turn="false"/>
+        <XMLShuffleEntry source="44" destination="44" flip="false" turn="false"/>
+        <XMLShuffleEntry source="45" destination="45" flip="false" turn="false"/>
+        <XMLShuffleEntry source="46" destination="46" flip="false" turn="false"/>
+        <XMLShuffleEntry source="47" destination="47" flip="false" turn="false"/>
+        <XMLShuffleEntry source="48" destination="48" flip="false" turn="false"/>
+        <XMLShuffleEntry source="49" destination="49" flip="false" turn="false"/>
+        <XMLShuffleEntry source="50" destination="50" flip="false" turn="false"/>
+        <XMLShuffleEntry source="51" destination="51" flip="false" turn="false"/>
+    </XMLShuffleEntries>
+</XMLShuffle>

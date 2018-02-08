@@ -5,6 +5,8 @@ import core.DeckSide
 import core.shuffeling.NonChangingShuffle
 import core.shuffeling.Shuffle
 import core.shuffeling.ShuffleRegister
+import io.WorkBundle
+import io.XMLShuffle
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleObjectProperty
@@ -103,9 +105,9 @@ class MainViewModel
 
     fun addShuffleToHistory()
     {
-        val choices = ShuffleRegister.registeredShuffleTypes.map { it.name }
+        val choices = ShuffleRegister.registeredShuffleTypes.sortedBy { it.name }.map { it.name }
 
-        val dialog = ChoiceDialog(ShuffleRegister.registeredShuffleTypes.first().name, choices)
+        val dialog = ChoiceDialog(choices.first(), choices)
         dialog.title = "Choose shuffle to add"
         dialog.headerText = "Choose shuffle to add"
         dialog.contentText = "Registered shuffles:"
@@ -164,7 +166,7 @@ class MainViewModel
     {
         var jarPath = File(MainViewModel::class.java.protectionDomain.codeSource.location.toURI().path)
 
-        if(jarPath.isFile)
+        if (jarPath.isFile)
             jarPath = File(jarPath.parent)
 
         val shufflesDirectory = jarPath.resolve(File("shuffles"))
@@ -180,16 +182,22 @@ class MainViewModel
             if (!file.path.endsWith(".shuffle"))
                 continue
 
-            val xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file)
+            try
+            {
+                val xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file)
 
-            val document = DOMBuilder().build(xmlDoc)
+                val document = DOMBuilder().build(xmlDoc)
 
-            val loadedShuffle = JDOM.load(document.rootElement, XMLShuffle::class.java)
+                val loadedShuffle = JDOM.load(document.rootElement, XMLShuffle::class.java)
 
-            if (!loadedShuffle.isValid())
+                if (!loadedShuffle.isValid())
+                    continue
+
+                ShuffleRegister.addShuffleType(loadedShuffle.toShuffleType())
+            } catch (e: Exception)
+            {
                 continue
-
-            ShuffleRegister.addShuffleType(loadedShuffle.toShuffleType())
+            }
         }
     }
 
@@ -204,26 +212,56 @@ class MainViewModel
 
         val currentState = WorkBundle(_deck, shuffles.drop(1).toList())
 
-        ObjectOutputStream(FileOutputStream(file)).use { it -> it.writeObject(currentState) }
-
-        _deck.Shuffle(_combinedShuffleState)
+        try
+        {
+            ObjectOutputStream(FileOutputStream(file)).use { it -> it.writeObject(currentState) }
+        } catch (e: Exception)
+        {
+            showErrorDialog("Could not save file.", "There was an error while saving the file.")
+            return
+        } finally
+        {
+            _deck.Shuffle(_combinedShuffleState)
+        }
 
         currentFilePath.set(file.absolutePath)
     }
 
+    private fun showErrorDialog(title: String, message: String)
+    {
+        val alert = Alert(AlertType.ERROR)
+        alert.title = title
+        alert.headerText = title
+        alert.contentText = message
+
+        alert.showAndWait()
+    }
+
     fun open(file: File)
     {
+
+
+        var workBundle = WorkBundle(_deck, shuffles)
+
+        try
+        {
+            ObjectInputStream(FileInputStream(file)).use { it ->
+                workBundle = it.readObject() as WorkBundle
+            }
+        } catch (e: Exception)
+        {
+
+            showErrorDialog("Could not open file.", "There was an error while opening the file.")
+            return
+        }
+
+
         _deck.Shuffle(_combinedShuffleState.reverse())
         _combinedShuffleState = NonChangingShuffle(_deck.size)
 
-        var workBundle: WorkBundle
-
-        ObjectInputStream(FileInputStream(file)).use { it ->
-            workBundle = it.readObject() as WorkBundle
-            _deck = workBundle.deck
-            shuffles.remove(1, shuffles.size)
-            shuffles.addAll(workBundle.shuffles.map { it.recreate() })
-        }
+        _deck = workBundle.deck
+        shuffles.remove(1, shuffles.size)
+        shuffles.addAll(workBundle.shuffles.map { it.recreate() })
 
         redraw()
 

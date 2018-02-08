@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <XMLShuffle name="TestShuffle" deckSize="3">
-    <ShuffleEntries>
+    <XMLShuffleEntries>
         <XMLShuffleEntry source="0" destination="2" flip="false" turn="false"/>
         <XMLShuffleEntry source="1" destination="1" flip="true" turn="false"/>
         <XMLShuffleEntry source="2" destination="0" flip="false" turn="true"/>
-    </ShuffleEntries>
+    </XMLShuffleEntries>
 </XMLShuffle>

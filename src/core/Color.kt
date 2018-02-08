@@ -28,4 +28,24 @@ class Color() : Serializable
         this.blue = blue
         this.alpha = alpha
     }
+
+    override fun equals(other: Any?): Boolean
+    {
+        if (other !is core.Color)
+            return false
+
+        return this.alpha == other.alpha &&
+                this.red == other.red &&
+                this.blue == other.blue &&
+                this.green == other.green
+    }
+
+    override fun hashCode(): Int
+    {
+        var result = red.hashCode()
+        result = 31 * result + green.hashCode()
+        result = 31 * result + blue.hashCode()
+        result = 31 * result + alpha.hashCode()
+        return result
+    }
 }
