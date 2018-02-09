@@ -12,8 +12,8 @@ Magicians can use this tool to extend and refine the so called '[Unshuffled](htt
 - [x] Reorder and remove shuffles from the shuffle history
 - [x] Save the deck, its painting and the shuffle history and load it at a later point of time
 - [x] Define you own custom shuffles
+- [x] Includes a wide set of already implemented shuffle techniques (thanks to Tom Merten)
 ## Planned
-- [ ] The following shuffles are implemented by default: 'in-Faro', 'out-Faro', 'Overhand' shuffle
 - [ ] Check the status and errors of custom defined shuffles
 - [ ] Define decks with an arbitrary amount of custom sized cards (currently only a 52 card standard deck is supported)
 
